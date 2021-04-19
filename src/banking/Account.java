@@ -4,18 +4,16 @@ public class Account {
     private static long idSeq = 0;
     private long id;
     private long cardNumber;
-    private String pin; // Unsafe temporary measure
-    // private int pinHash;
+    private int pinHash;
     private long balance;
 
     public Account() {
     }
 
-    public Account(long cardNumber, String pin) {
+    public Account(long cardNumber, int pinHash) {
         id = getNextId();
         this.cardNumber = cardNumber;
-        this.pin = pin;
-        // this.pinHash = pinHash;
+        this.pinHash = pinHash;
         balance = 0;
     }
 
@@ -27,13 +25,9 @@ public class Account {
         this.cardNumber = cardNumber;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+        public void setPinHash(int pinHash) {
+        this.pinHash = pinHash;
     }
-
-    //    public void setPinHash(int pinHash) {
-//        this.pinHash = pinHash;
-//    }
 
     public void setBalance(long balance) {
         this.balance = balance;
@@ -47,20 +41,27 @@ public class Account {
         return cardNumber;
     }
 
-    public String getPin() {
-        return pin;
+    public int getPinHash() {
+        return pinHash;
     }
-
-    //    public int getPinHash() {
-//        return pinHash;
-//    }
 
     public long getBalance() {
         return balance;
     }
 
-    public void changeBalance(long sum) {
-        balance += sum;
+    public long withdrawSum(long sum) {
+        if (sum > 0) {
+            balance -= sum;
+            return sum;
+        }
+
+        return 0;
+    }
+
+    public void depositSum(long sum) {
+        if (sum > 0) {
+            balance += sum;
+        }
     }
 
     private static long getNextId() {
